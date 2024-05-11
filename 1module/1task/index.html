@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Выпадающий блок</title>
+    <script defer src="main.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+    <style>
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="dropdown">
+            <button id="toggleButton" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Выберите действие
+            <span class="caret"></span></button>
+            <div id="dropdownBlock" class="dropdown-content">
+                <a href="#">Первое действие</a>
+                <a href="#">Второе действие</a>
+                <a href="#">Третье действие</a>
+            </div>
+        </div>
+        <div id="dropdownBlock" class="dropdown-block mt-3" style="display: none;">
+            <p>Содержимое выпадающего блока</p>
+        </div>
+    </div>
+</body>
+</html>
+

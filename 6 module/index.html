@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Цепочка прототипов</title>
+  <style>
+    .error {
+      border-color: red;
+    }
+  </style>
+</head>
+<body>
+  <label for="class-input">Введите название класса, функции или модуля:</label>
+  <input type="text" id="class-input">
+  <button id="show-prototype-chain">Показать цепочку прототипов</button>
+  <ol id="prototype-chain"></ol>
+
+  <script>
+    const classInput = document.getElementById('class-input');
+    const showPrototypeChainButton = document.getElementById('show-prototype-chain');
+    const prototypeChainList = document.getElementById('prototype-chain');
+
+    showPrototypeChainButton.addEventListener('click', async () => {
+      const inputValue = classInput.value.trim();
+      let targetObject;
+
+      if (inputValue.endsWith('.js')) {
+        try {
+          const module = await import(`./${inputValue}`);
+          targetObject = module.default;
+        } catch (error) {
+          classInput.classList.add('error');
+          prototypeChainList.innerHTML = '';
+          console.error('Ошибка при загрузке модуля:', error);
+          return;
+        }
+
+        if (!(targetObject && typeof targetObject === 'function')) {
+          classInput.classList.add('error');
+          prototypeChainList.innerHTML = '';
+          console.error('Модуль не экспортирует класс по умолчанию');
+          return;
+        }
+      } else {
+        targetObject = window[inputValue];
+
+        if (!targetObject) {
+          classInput.classList.add('error');
+          prototypeChainList.innerHTML = '';
+          return;
+        }
+      }
+
+      classInput.classList.remove('error');
+      prototypeChainList.innerHTML = '';
+
+      let currentPrototype = Object.getPrototypeOf(targetObject);
+      while (currentPrototype) {
+        const listItem = document.createElement('li');
+        const constructorName = currentPrototype.constructor.name || '[Без названия]';
+        listItem.textContent = `Конструктор: ${constructorName}`;
+
+        const prototypePropertiesList = document.createElement('ol');
+        for (const prop in currentPrototype) {
+          if (currentPrototype.hasOwnProperty(prop) && currentPrototype.propertyIsEnumerable(prop)) {
+            const propertyItem = document.createElement('li');
+            propertyItem.textContent = `${prop}: ${typeof currentPrototype[prop]}`;
+            prototypePropertiesList.appendChild(propertyItem);
+          }
+        }
+        listItem.appendChild(prototypePropertiesList);
+        prototypeChainList.appendChild(listItem);
+
+        currentPrototype = Object.getPrototypeOf(currentPrototype);
+      }
+    });
+  </script>
+</body>
+</html>
