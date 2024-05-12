@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Онлайн-оплата</title>
+  <link rel="stylesheet" href="/index.f844a3e7.css">
+</head>
+<body>
+  <form id="payment-form">
+    <div>
+      <label for="card-number">Номер карты</label>
+      <input type="text" id="card-number">
+      <div id="card-logo"></div>
+    </div>
+
+    <label for="expiry-date">Дата окончания действия карты (ММ/ГГ):</label>
+    <input type="text" id="expiry-date" name="expiry-date" required="">
+
+    <label for="cvc">CVC/CVV (3 цифры на обороте карты):</label>
+    <input type="text" id="cvc" name="cvc" required="">
+
+    <label for="email">Email для отправки онлайн-чека:</label>
+    <input type="email" id="email" name="email" required="">
+
+    <button type="submit" id="pay-btn" disabled="">Оплатить</button>
+  </form>
+  <script src="/index.3d214d75.js" defer=""></script>
+</body>
+</html>
